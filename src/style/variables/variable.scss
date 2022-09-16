@@ -1,0 +1,40 @@
+$padding: 8px;
+$grid-columns: 12;
+$grid-row-columns: 6;
+$grid-gutter-width: $padding * 3;
+$grid-breakpoints: (
+    mobile: 0,
+    tablet: 768px,
+    medium: 1024px,
+    desktop: 1200px,
+    large: 1920px,
+);
+$container-max-widths: (
+    mobile: 100%,
+    tablet: 100%,
+    medium: 100%,
+    desktop: 100%,
+    large: 1920px,
+);
+$container-padding: (
+    desktop: $padding * 5,
+    mobile: $padding * 3,
+    tablet: $padding * 5,
+);
+$colors: (
+    black: #000000,
+    white: #ffffff,
+    green: #638C0B,
+    blue: #002256,
+    yellow: #FFDD1F,
+    pink: #E25B94,
+    lightpink: #FF8EBE,
+    lightyellow: #FACC89,
+    brown: #B4791D,
+    orange: #FA9638,
+);
+$header-height: (
+    desktop: 197px,
+    tablet: 111px,
+    mobile: 65px,
+);
