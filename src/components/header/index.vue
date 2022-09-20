@@ -5,63 +5,19 @@
     >
         <div class="header__wrapper container">
             <img class="header__logo" src="@/assets/logo.png" alt="" @click="scrollTo('hero')">
-            <ul
-                class="header__menu"
-                :class="{'-active': showMenu}"
-                @click="toggleMenu"
-            >
-                <div class="header__menu-close"></div>
-                <li @click="scrollTo('about')">
-                    About
-                </li>
-                <li @click="scrollTo('vision')">
-                    Vision
-                </li>
-                <li @click="scrollTo('galaxy')">
-                    Galaxy Frens
-                </li>
-                <li @click="scrollTo('faq')">
-                    FAQ
-                </li>
-                <li @click="scrollTo('team')">
-                    Team
-                </li>
-                <div class="header__menu-social">
-                    <a class="header__menu-social-icon" href="https://twitter.com/rugpullfrens" target="__blank">
-                        <Icon name="twitter"></Icon>
-                    </a>
-                    <a class="header__menu-social-icon" href="https://discord.com/invite/rugpullfrens" target="__blank">
-                        <Icon name="discord"></Icon>
-                    </a>
-                    <a class="header__menu-social-icon" href="https://instagram.com/rpf_nft" target="__blank">
-                        <Icon name="instagram"></Icon>
-                    </a>
-                </div>
-            </ul>
+            <p>RAIbbit Hole</p>
             <div class="header__nav">
-                <div class="header__nav-lang" @click="switchLang">
-                    中 / EN
-                </div>
-                <a class="header__nav-icon" href="https://twitter.com/rugpullfrens" target="__blank">
-                    <Icon name="twitter"></Icon>
+                <a href="https://raibbithole.xyz/" class="header__nav-btn">
+                    Home
                 </a>
-                <a class="header__nav-icon" href="https://discord.com/invite/rugpullfrens" target="__blank">
-                    <Icon name="discord"></Icon>
+                <a href="" class="header__nav-btn yellow">
+                    Connect Wallet
                 </a>
-                <a class="header__nav-icon" href="https://instagram.com/rpf_nft" target="__blank">
-                    <Icon name="instagram"></Icon>
-                </a>
-                <div class="header__nav-hamburger" @click="toggleMenu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
             </div>
         </div>
     </header>
 </template>
 <script setup>
-    import Icon from '../Icon.vue'
     import { useI18n } from "vue-i18n"
     import { i18n } from '@/main.js'
     import { nextTick, onMounted, ref } from '@vue/runtime-core'
@@ -123,6 +79,14 @@
         &__wrapper {
             display: flex;
             align-items: flex-start;
+            align-items: center;
+            p{
+                font-size: 40px;
+                padding: 0 1rem 0;
+                @include media-breakpoint-down(tablet) {
+                    display: none;
+                }
+            }
         }
 
         &__logo {
@@ -230,7 +194,7 @@
         &__nav {
             display: flex;
             margin-left: auto;
-            color: map-get($colors, black);
+            color: map-get($colors, white);
 
             @include media-breakpoint-down(tablet) {
                 align-items: center;
@@ -239,10 +203,23 @@
             > * {
                 margin-left: 36px;
                 cursor: pointer;
+                @include media-breakpoint-down(tablet) {
+                    margin-left: 5px;
+                }
             }
 
-            &-lang {
+            &-btn {
                 @include typo('button', 1);
+
+                &.yellow {
+                    background-color: map-get($colors, yellow);
+                    border: 1px solid map-get($colors, yellow);
+                    color: map-get($colors, black);
+                }
+                &.gray {
+                    background-color: map-get($colors, grays);
+                    border: 1px solid map-get($colors, grays);
+                }
             }
 
             &-icon {

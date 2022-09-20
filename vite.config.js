@@ -25,6 +25,13 @@ export default defineConfig({
     },
     server: {
         host: '0.0.0.0',
+        // proxy: {
+        //     "/api": {
+        //         target: "https://wijfssgy0b.execute-api.ap-northeast-1.amazonaws.com",
+        //         changeOrigin: true,
+        //         rewrite: (path) => path.replace(/^\/api/, ""),
+        //     },
+        // }
     },
     plugins: [
         vue(),

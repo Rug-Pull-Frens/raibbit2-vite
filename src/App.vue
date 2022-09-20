@@ -8,12 +8,7 @@
             id="hero"
             :loading="isLoading"
         ></Hero>
-        <About id="about"></About>
-        <Vision id="vision"></Vision>
-        <Galaxy id="galaxy"></Galaxy>
-        <Rug id="rug"></Rug>
-        <Faq id="faq"></Faq>
-        <Team id="team"></Team>
+        <Card id="card"></Card>
     </main>
     <!-- <DevColumn/> -->
 </template>
@@ -25,12 +20,7 @@
     import Loading from './components/Loading.vue'
 
     import Hero from './components/section/hero.vue'
-    import About from './components/section/about.vue'
-    import Vision from './components/section/vision.vue'
-    import Galaxy from './components/section/galaxy.vue'
-    import Rug from './components/section/rug.vue'
-    import Faq from './components/section/faq.vue'
-    import Team from './components/section/team.vue'
+    import Card from './components/section/card.vue'
 
     
     import { onMounted, reactive, ref, watch, inject } from '@vue/runtime-core'

@@ -39,7 +39,7 @@
         justify-content: center;
         align-items: center;
         z-index: 999;
-        background-color: map-get($colors, green);
+        background-color: map-get($colors, black);
         transition: opacity .5s 1s;
 
         &.-done {

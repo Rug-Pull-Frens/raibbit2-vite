@@ -5,26 +5,20 @@
                 class="sec-hero__bg-img"
                 data-scroll
                 data-scroll-speed="1"
-                src="@/assets/img/hero_bg.jpg"
+                src="@/assets/img/hero_bg.gif"
                 alt=""
             >
-            <img class="sec-hero__bg-gif" src="@/assets/img/hero_front.gif" alt="">
         </div>
         <div class="sec-hero__wrapper">
             <h1 class="sec-hero__wrapper-title">
                 <div>
-                    <p>Dive Into</p>
-                </div>
-                <div>
-                    <p>RAIbbit Hole</p>
+                    <p>RAIbbit Hole Speakeasy</p>
                 </div>
             </h1>
             <p class="sec-hero__wrapper-description">
-                {{ t('hero.description') }}
+                All unspoken secrets are a mirage of reality
+                <!-- {{ t('hero.description') }} -->
             </p>
-            <a href="" class="sec-hero__wrapper-btn">
-                Get Ticket!
-            </a>
         </div>
     </div>
 </template>
@@ -52,12 +46,6 @@
                 scale: 1.5,
                 ease: "power4.out",
             })
-            gsap.from(".sec-hero__bg-gif", {
-                duration: 1,
-                delay: 1,
-                y: '10%',
-                ease: "power4.out",
-            })
             setTimeout(() => {
                 document.querySelector('.sec-hero__wrapper-title').classList.add('-show')
             }, 1000);
@@ -71,8 +59,9 @@
 
         display: flex;
         align-items: center;
-        color: map-get($colors, black);
-        min-height: 100vh;
+        justify-content: center;
+        color: map-get($colors, white);
+        min-height: 110vh;
 
         @include media-breakpoint-down(tablet) {
             align-items: flex-start;
@@ -81,7 +70,7 @@
         }
 
         &__bg {
-            @include size(100vw, 100vh);
+            @include size(100vw, 110vh);
 
             position: absolute;
             top: 0;
@@ -93,7 +82,7 @@
             pointer-events: none;
 
             @include media-breakpoint-down(tablet) {
-                @include size(100vw, 100vh);
+                @include size(100vw, 110vh);
 
                 justify-content: flex-end;
                 align-items: flex-end;
@@ -122,15 +111,17 @@
         }
 
         &__wrapper {
-            @include set-col-offset(1, 12, 1);
-
+            // @include set-col-offset(1, 12, 1);
+            
+            margin-top: 20vw;
             position: relative;
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
+            align-items: center;
             z-index: 1;
 
             @include media-breakpoint-down(tablet) {
+                margin-top: 80vw;
                 align-items: center;
                 margin-left: 0;
             }

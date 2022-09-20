@@ -101,14 +101,18 @@ $font-family: (
         }
     } @else if $lv == 'button' {
         @if $type == 1 {
-            font-size: 24px;
+            font-size: 14px;
             font-family: map-get($font-family, en);
             font-weight: map-get($font-weight, medium);
             line-height: 36px;
             letter-spacing: 0px;
+            padding: 0 .9rem;
+            border-radius: 5rem;
+            border: 1px solid map-get($colors, white);
 
             @include media-breakpoint-down(tablet) {
-                font-size: 20px;
+                font-size: 12px;
+                padding: 0 1.2rem;
                 font-weight: map-get($font-weight, bold);
             }
         } @else {
