@@ -10,8 +10,11 @@
                 <a href="https://raibbithole.xyz/" class="header__nav-btn">
                     Home
                 </a>
-                <a href="" class="header__nav-btn yellow">
+                <!-- <a href="" class="header__nav-btn yellow">
                     Connect Wallet
+                </a> -->
+                <a href="" class="header__nav-btn yellow" @click.prevent="connectWallet">
+                    Coming Soon
                 </a>
             </div>
         </div>
@@ -40,6 +43,10 @@
     const scrollTo = (id) => {
         console.log(window.$scroll)
         window.$scroll.scrollTo('#' + id)
+    }
+
+    const connectWallet = (event) => {
+        event.target.className += ' disabled';
     }
 
     const toggleMenu = () => {
