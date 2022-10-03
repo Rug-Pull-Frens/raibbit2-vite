@@ -6,7 +6,6 @@ import en from "./locales/en.json";
 import zhTW from "./locales/zh-TW.json";
 import AOS from 'aos'
 import 'aos/dist/aos.css'
-import Popper from "vue3-popper";
 
 
 const app = createApp(App)
@@ -30,4 +29,3 @@ app.AOS = new AOS.init()
 app.use(AOS)
 
 app.component( 'svg-icon' , svgIcon).mount('#app')
-app.component("Popper", Popper);
