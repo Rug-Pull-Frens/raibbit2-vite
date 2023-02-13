@@ -55,7 +55,7 @@ const showPop = ref(false);
 const isDisabled = ref(true);
 
 const url =
-  "https://wijfssgy0b.execute-api.ap-northeast-1.amazonaws.com/gallery";
+  "https://kmkvbo95w3.execute-api.ap-northeast-1.amazonaws.com/gallery";
 axios
   .get(url)
   .then((res) => {
