@@ -61,6 +61,10 @@ axios
   .then((res) => {
     console.log(res.data);
     card.value = res.data;
+    setTimeout(() => {
+      window.$scroll.update();
+    }, 1000);
+
     // return {
     //     card
     // }
