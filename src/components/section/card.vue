@@ -117,14 +117,15 @@ const infuraId = "27a789b5b3154631a5dc5c3a61c789bb";
 const openseaAPIKey = "b443520a48ed4704bd46ead51059a05a";
 
 // contract addr : mainnet
-// const chainIdToUse = 137;
-// const BFFAddress = "0x0cCDe8834f16035bb116cDC17aF024df508E5A6D";
-// const marketplaceAddress = "";
+const chainIdToUse = 137;
+const BFFAddress = "0x7711F4c00B5A1Ef1E328089e021160e4765f6cF7";
+const marketplaceAddress = "0x7cE66b940B566fE7CAFAECf5009aAF3553580e7b";
+const openseaURL = ref("https://opensea.io/zh-TW/assets/matic/");
 
 // contract addr : testnet
-const chainIdToUse = 80001;
-const BFFAddress = "0xB80ae96b55379A82Fa9AABee850C6683D6157533";
-const marketplaceAddress = "0xd0b62655d7095AF74868E2bAe7679Ab9a4e819d9";
+// const chainIdToUse = 80001;
+// const BFFAddress = "0xB80ae96b55379A82Fa9AABee850C6683D6157533";
+// const marketplaceAddress = "0xd0b62655d7095AF74868E2bAe7679Ab9a4e819d9";
 
 let providerActivated = inject("providerActivated");
 let signerActivated = inject("signerActivated");
