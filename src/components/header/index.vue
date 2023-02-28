@@ -222,33 +222,37 @@ onAccountsChanged(async () => {
   marketplaceConfig.value = { status: null, balance: 0 };
 
   // Check for balance of BFF
-  await displayBalanceOfBFF();
-
-  loader.hide();
-});
-onChainChanged(async (chainId) => {
-  console.log("onChainChanged");
-
-  // Display Loading bar
-  let loader = $loading.show({
-    container: fullPage ? null : this.$refs.formContainer,
-    canCancel: true,
-    onCancel: onCancel,
-  });
-
-  selectedChainId.value = chainId;
-  isChainChanged.value = true;
-
-  // reset status
-  marketplaceConfig.value = { status: null, balance: 0 };
-
-  // Check for money bag qualification
-  if (isActivated.value) {
+  try {
     await displayBalanceOfBFF();
+  } catch (e) {
+    disconnect();
   }
 
   loader.hide();
 });
+// onChainChanged(async (chainId) => {
+//   console.log("onChainChanged");
+
+//   // Display Loading bar
+//   let loader = $loading.show({
+//     container: fullPage ? null : this.$refs.formContainer,
+//     canCancel: true,
+//     onCancel: onCancel,
+//   });
+
+//   selectedChainId.value = chainId;
+//   isChainChanged.value = true;
+
+//   // reset status
+//   marketplaceConfig.value = { status: null, balance: 0 };
+
+//   // Check for money bag qualification
+//   if (isActivated.value && selectedChainId.value === chainIdToUse) {
+//     await displayBalanceOfBFF();
+//   }
+
+//   loader.hide();
+// });
 onChanged(async ({ provider, signer }) => {
   console.log("onChanged");
   // Display Loading bar
@@ -267,8 +271,12 @@ onChanged(async ({ provider, signer }) => {
   marketplaceConfig.value = { status: null, balance: 0 };
 
   // Check for money bag qualification
-  if (isActivated.value) {
-    await displayBalanceOfBFF();
+  if (isActivated.value && selectedChainId.value === chainIdToUse) {
+    try {
+      await displayBalanceOfBFF();
+    } catch (e) {
+      disconnect();
+    }
   }
 
   loader.hide();
@@ -295,7 +303,7 @@ watch(selectedChainId, async (val, oldVal) => {
   notify({
     group: "dapp",
     type: "warn",
-    title: t("moneyBag.switchNetwork"),
+    title: "Please Switch To Polygon Mainnet to continue",
     duration: 6000,
   });
 
@@ -303,11 +311,21 @@ watch(selectedChainId, async (val, oldVal) => {
   try {
     if (wallet.connector) {
       await wallet.connector.switchChain(chainIdToUse);
+
+      notify({
+        group: "dapp",
+        type: "success",
+        title:
+          "Switch To Polygon Mainnet successfully, Please Connect Wallet again!",
+        duration: 6000,
+      });
+
+      disconnect();
     }
   } catch (e) {
     switchError.value = true;
     selectedChainId.value = oldVal;
-    console.error(e);
+    console.error("switch error:", e);
   }
 
   loader.hide();
@@ -323,19 +341,30 @@ async function displayBalanceOfBFF() {
     providerActivated.value
   );
 
-  // get Balance
   let balance_wei;
-  balance_wei = await BFFContract.balanceOf(address.value);
-  marketplaceConfig.value["balance"] = parseInt(
-    ethers.utils.formatEther(balance_wei)
-  );
-
-  // get approved status
   let approved_amount;
-  approved_amount = await BFFContract.allowance(
-    address.value,
-    marketplaceAddress
-  );
+  try {
+    // get Balance
+    balance_wei = await BFFContract.balanceOf(address.value);
+    marketplaceConfig.value["balance"] = parseInt(
+      ethers.utils.formatEther(balance_wei)
+    );
+
+    // get approved status
+    approved_amount = await BFFContract.allowance(
+      address.value,
+      marketplaceAddress
+    );
+  } catch (e) {
+    notify({
+      group: "dapp",
+      type: "error",
+      text: "Traffic Jammed in Blockchain service, please retry after 1 min",
+    });
+    disconnect();
+    return;
+  }
+
   if (
     ethers.utils.formatUnits(ethers.constants.MaxUint256, "wei") ===
     ethers.utils.formatUnits(approved_amount, "wei")
