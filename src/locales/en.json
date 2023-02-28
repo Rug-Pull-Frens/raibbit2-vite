@@ -1,45 +1,94 @@
 {
-    "hero": {
-        "description": "Rug Pull Frens, get your ticket to discover the RAIbbit Hole universe!"
+  "hero": {
+    "description": "Rug Pull Frens, get your ticket to discover the RAIbbit Hole universe!"
+  },
+  "dapp": {
+    "connectWallet": "Connect",
+    "disconnectWallet": "Disconnect",
+    "walletConnecting": "Connecting...",
+    "walletLoading": "Loading...",
+    "burnDescription": "RPF TokenId to Burn : ",
+    "noRPFDescription": "No Rug Pull Frens Found in Wallet!",
+    "userDeclineTransaction": "User declined Tx",
+    "approveRPFForBurnButton": "Approve",
+    "mintTicketButton": "Mint Ticket",
+    "RPFHasBeenApproved": "RPF has been approved. You can mint the Ticket now!",
+    "RPFNotYetApproved": "Need approval for burnning RPF, please press 'Approve' button below",
+    "RPFApprovalTXFailed": "Approval Failed!",
+    "RPFApprovalTXSuccess": "Approved Successfully!",
+    "ticketNotActiveMessages": "Ticket mint is not available now",
+    "ticketMintTXFailed": "Ticket Mint Failed!",
+    "ticketMintedTitle": "RAIbbit Hole Tickets Minted Successfully!",
+    "ticketMintedMessages": "You have minted 1 Ticket!",
+    "viewTicketOnOpensea": "VIEW ON OPENSEA",
+    "ticketMintedAlreadyTx": "Transaction Failed. You have already minted the ticket.",
+    "ticketMintedAlreadyConnectWallet": " You have already minted the ticket.",
+    "mintAmount": "Mint Amount",
+    "rpfHolderMintDescription": "Current Stage: RPF Holders Mint",
+    "galaxyMintButton": "Mint Galaxy Frens",
+    "galaxtMintTXFailed": "Mint failed! Please try again later or contact admin for support",
+    "rpfHolderValidationFailed": "You are not eligible for the this Mint.",
+    "frensMintedTitle": "Galaxy Frens Mint Success!",
+    "whitelistMintDescription": "Current Stage: Allowlist Mint",
+    "publicMintDescription": "Current Stage: Public Mint",
+    "delayOnOpenseaNotice": "It might take 1~2 mins for your Galaxy Frens to display on Opensea.",
+    "mintQuantityExceedsOnRPFHolderMint": "All the RPF holders-reserved Galaxy Frens have been minted.",
+    "mintQuantityExceedsOnWhitelistMint": "All the Allow List Galaxy Frens have been minted.",
+    "mintQuantityExceedsOnPublicMint": "All the public-reserved Galaxy Frens have been minted."
+  },
+  "marketplace": {
+    "revertByContract": "Transaction failed! Please contact the admins for support",
+    "waitingForTXResult": "Processing...",
+    "approvedTitle": "Marketplace Contract Approved!",
+    "approvedContext": "You are now open to purchase item on marketplace!",
+    "approveTxFailed": "Failed! Please try again later or reach out to the admins for support",
+    "BFFNotEnough": "BFF Coin insufficient"
+  },
+  "about": {
+    "description": "RAIbbit Hole is an extraordinary universe that drifts within the subconscious dreams of Raimochi. Among the many worlds in this universe, the most developed is the existing Rug Pull Frens. Just recently discovered to be hidden beneath the forests lies another world. Galaxy Frens.\n\nRAIbbit Hole is the portal that bridges reality and dreamscape, as it synonymously bridges us between web 2 and web 3 worlds. When you feel hopeless, confused, and exhausted, a mysterious young rabbit will appear and guide you into the secret world of RAIbbit Hole. Here, you can escape from reality and find your true identity and comfort zone - Hey fren, welcome to the RAIbbit Hole."
+  },
+  "vision": {
+    "description": "Creativity, innovation, community, and knowledge are the core pillars of our world. We hope to spread warmth to every corner of the world through Raimochi's compelling creations paired with RAIbbit Hole's character IP. Our intention is to build continuous collaborations with different creators and brands to develop innovative digital creations and NFT utility. We aim to serve as a bridge between web 2 and web 3, and to lead a wider audience down the fascinating web 3 rabbit hole.",
+    "sub": "・Specific roadmap will depend on launch and market conditions."
+  },
+  "galaxy": {
+    "description": "Galaxy Frens is a vibrant world of life hidden beneath the earth. Within a large and thick snow-covered forest, lies a small and unassuming hole at the deepest end. It is told that one can only find this hole by pure fate, or through a secret portal in a mysterious bar from RPF when one is feeling hopeless, confused, and exhausted. \n\nNo matter what species you belonged to before falling into this world, you always revert into a young rabbit once you land in Galaxy Frens. Although this is a carefree world absent of worries, you may notice that with each passing day here, you begin to lose more and more memories..."
+  },
+  "rug": {
+    "description": "To maintain anonymity and decentralization in the world of blockchain, we all wear a plush animal head mask. By putting on our masks, we become Frens, and we’re are represented only by our Frens.\n\nWe may seem cute at a glance, but don’t let that fool you. We are “good friends” that take everything, including money, NFTs, music, and even your love, your tears, and your sense of loss. \n\nWe’d do everything we can to be rewarded some smiles, some adventure, some bounty, some…things that make us feel like we’re not just living a futile existence. We strive for more solace and encouragement. What I’m doing is for a brighter future, and honestly, who isn’t?"
+  },
+  "faq": [
+    {
+      "question": "Can you tell me the mint info?",
+      "anser": "Mint price and mint date will be announced in our Discord server when the timing is right."
     },
-    "about": {
-        "description": "RAIbbit Hole is an extraordinary universe that drifts within the subconscious dreams of Raimochi. Among the many worlds in this universe, the most developed is the existing Rug Pull Frens. Just recently discovered to be hidden beneath the forests lies another world. Galaxy Frens.\n\nRAIbbit Hole is the portal that bridges reality and dreamscape, as it synonymously bridges us between web 2 and web 3 worlds. When you feel hopeless, confused, and exhausted, a mysterious young rabbit will appear and guide you into the secret world of RAIbbit Hole. Here, you can escape from reality and find your true identity and comfort zone - Hey fren, welcome to the RAIbbit Hole."
+    {
+      "question": "If I own Rug Pull Frens, will I get a special perk for the mint?",
+      "anser": "We have prepared a special perk for the Rug Pull Frens holders to get their Galaxy Frens! More information will be released in our Discord server."
     },
-    "vision": {
-        "description": "Creativity, innovation, community, and knowledge are the core pillars of our world. We hope to spread warmth to every corner of the world through Raimochi's compelling creations paired with RAIbbit Hole's character IP. Our intention is to build continuous collaborations with different creators and brands to develop innovative digital creations and NFT utility. We aim to serve as a bridge between web 2 and web 3, and to lead a wider audience down the fascinating web 3 rabbit hole.",
-        "sub": "・Specific roadmap will depend on launch and market conditions."
+    {
+      "question": "What's the max mint at a time?",
+      "anser": "Max mint per txn will be announced along with the mint info in our Discord server."
     },
-    "galaxy": {
-        "description": "Galaxy Frens is a vibrant world of life hidden beneath the earth. Within a large and thick snow-covered forest, lies a small and unassuming hole at the deepest end. It is told that one can only find this hole by pure fate, or through a secret portal in a mysterious bar from RPF when one is feeling hopeless, confused, and exhausted. \n\nNo matter what species you belonged to before falling into this world, you always revert into a young rabbit once you land in Galaxy Frens. Although this is a carefree world absent of worries, you may notice that with each passing day here, you begin to lose more and more memories..."
+    {
+      "question": "How do I get on the whitelist?",
+      "anser": "Whitelist spots will be given away through raffles, collab giveaways, and community events! Check out our Discord server for more information!"
     },
-    "rug": {
-        "description": "To maintain anonymity and decentralization in the world of blockchain, we all wear a plush animal head mask. By putting on our masks, we become Frens, and we’re are represented only by our Frens.\n\nWe may seem cute at a glance, but don’t let that fool you. We are “good friends” that take everything, including money, NFTs, music, and even your love, your tears, and your sense of loss. \n\nWe’d do everything we can to be rewarded some smiles, some adventure, some bounty, some…things that make us feel like we’re not just living a futile existence. We strive for more solace and encouragement. What I’m doing is for a brighter future, and honestly, who isn’t?"
+    {
+      "question": "If I own both Rug Pull Frens and Galaxy Frens, will I recieve any special benefits?",
+      "anser": "Yes, holding both Rug Pull Frens and Galaxy Frens allows you to participate in both storylines and grants you some special benefits!"
     },
-    "faq": [
-        {
-            "question": "Can you tell me the mint info?",
-            "anser": "Mint price and mint date will be announced in our Discord server when the timing is right."
-        },{
-            "question": "If I own Rug Pull Frens, will I get a special perk for the mint?",
-            "anser": "We have prepared a special perk for the Rug Pull Frens holders to get their Galaxy Frens! More information will be released in our Discord server."
-        },{
-            "question": "What's the max mint at a time?",
-            "anser": "Max mint per txn will be announced along with the mint info in our Discord server."
-        },{
-            "question": "How do I get on the whitelist?",
-            "anser": "Whitelist spots will be given away through raffles, collab giveaways, and community events! Check out our Discord server for more information!"
-        },{
-            "question": "If I own both Rug Pull Frens and Galaxy Frens, will I recieve any special benefits?",
-            "anser": "Yes, holding both Rug Pull Frens and Galaxy Frens allows you to participate in both storylines and grants you some special benefits!"
-        },{
-            "question": "How will the Galaxy Frens be distributed?",
-            "anser": "The distribution plan will be announced once the total supply is set."
-        },{
-            "question": "What are the royalty fees and how will they be used?",
-            "anser": "The percentage of royalty fees collected in secondary sales will also be announced when the mint info is released. A portion of these fees will be used on fulfilling our roadmap and giving back to the community!"
-        },{
-            "question": "Awesome! How can I get involved?",
-            "anser": "Jump ahead to our discord community! You can find out more about the RAIbbit Hole, participating in various events, and get to know other frens!"
-        }
-    ]
+    {
+      "question": "How will the Galaxy Frens be distributed?",
+      "anser": "The distribution plan will be announced once the total supply is set."
+    },
+    {
+      "question": "What are the royalty fees and how will they be used?",
+      "anser": "The percentage of royalty fees collected in secondary sales will also be announced when the mint info is released. A portion of these fees will be used on fulfilling our roadmap and giving back to the community!"
+    },
+    {
+      "question": "Awesome! How can I get involved?",
+      "anser": "Jump ahead to our discord community! You can find out more about the RAIbbit Hole, participating in various events, and get to know other frens!"
+    }
+  ]
 }

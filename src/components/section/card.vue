@@ -29,12 +29,25 @@
                 <i>B</i>
               </div>
               <div
-                class="sec-card__artist-item-content-purchase-pur header__nav-btn gray"
+                v-if="
+                  (wallet.status != 'connected') |
+                    !marketplaceConfig.status |
+                    (marketplaceConfig.balance < item.item_price)
+                "
+                class="sec-card__artist-item-content-purchase-pur notConnected header__nav-btn gray"
+                @click="notifyToCheckWallet(item)"
               >
-                <!-- <div
+                PURCHASE
+              </div>
+              <div
+                v-if="
+                  (wallet.status === 'connected') &
+                  marketplaceConfig.status &
+                  (marketplaceConfig.balance >= item.item_price)
+                "
                 class="sec-card__artist-item-content-purchase-pur header__nav-btn gray"
-                @click="clickPurchase()"
-              > -->
+                @click="clickPurchase(item)"
+              >
                 PURCHASE
               </div>
             </div>
@@ -48,16 +61,83 @@
 <script setup>
 import axios from "axios";
 import { ref, reactive } from "@vue/reactivity";
+import { watch, inject } from "@vue/runtime-core";
 import Pop from "../pop.vue";
+import {
+  useMulticall,
+  useBoard,
+  useEthers,
+  useWallet,
+  displayChainName,
+  displayEther,
+  shortenAddress,
+  useEthersHooks,
+  MetaMaskConnector,
+  WalletConnectConnector,
+  CoinbaseWalletConnector,
+  VueDapp,
+} from "vue-dapp";
+import { ethers } from "ethers";
+import { Interface } from "@ethersproject/abi";
+import BFFMarketplaceAbi from "/src/abi/BFFMarketplace.json";
+import BFFAbi from "/src/abi/BFF.json";
+import { useLoading } from "vue-loading-overlay";
+import { notify } from "@kyvg/vue3-notification";
+import { useI18n } from "vue-i18n";
+import { i18n } from "@/main.js";
+
+const { wallet, disconnect, onDisconnect, onAccountsChanged, onChainChanged } =
+  useWallet();
+const { address, balance, chainId, isActivated } = useEthers();
+const { onActivated, onChanged, onDeactivated } = useEthersHooks();
+
+const { locale, t } = useI18n({
+  inheritLocale: true,
+});
+
+const switchLang = () => {
+  if (i18n.global.locale.value === "en") {
+    i18n.global.locale.value = "zh-TW";
+  } else {
+    i18n.global.locale.value = "en";
+  }
+};
 
 const card = ref({});
 const showPop = ref(false);
 const isDisabled = ref(true);
 
-const url =
-  "https://kmkvbo95w3.execute-api.ap-northeast-1.amazonaws.com/gallery";
+// Init Loader
+const $loading = useLoading();
+const fullPage = ref(true);
+const onCancel = () => console.log("User cancelled the loader.");
+
+// Blockchain Services
+const infuraId = "27a789b5b3154631a5dc5c3a61c789bb";
+const openseaAPIKey = "b443520a48ed4704bd46ead51059a05a";
+
+// contract addr : mainnet
+// const chainIdToUse = 137;
+// const BFFAddress = "0x0cCDe8834f16035bb116cDC17aF024df508E5A6D";
+// const marketplaceAddress = "";
+
+// contract addr : testnet
+const chainIdToUse = 80001;
+const BFFAddress = "0xB80ae96b55379A82Fa9AABee850C6683D6157533";
+const marketplaceAddress = "0xd0b62655d7095AF74868E2bAe7679Ab9a4e819d9";
+
+let providerActivated = inject("providerActivated");
+let signerActivated = inject("signerActivated");
+
+const marketplaceConfig = inject("marketplaceConfig");
+const selectedChainId = inject("selectedChainId");
+const isChainChanged = inject("isChainChanged");
+const switchError = inject("switchError");
+
+const apiEnpoint = "https://api.raibbithole.xyz/gallery";
+
 axios
-  .get(url)
+  .get(apiEnpoint)
   .then((res) => {
     console.log(res.data);
     card.value = res.data;
@@ -75,13 +155,279 @@ axios
 
 console.log("card", card);
 
-const clickPurchase = () => {
-  showPop.value = true;
-};
+// ------ dapp Function Implementation --------
+// Event hooks
+// onActivated(async ({ provider, address, signer }) => {
+//   console.log("onActivated: ", provider, address, signer);
+
+//   // Display Loading bar
+//   let loader = $loading.show({
+//     container: fullPage ? null : this.$refs.formContainer,
+//     canCancel: true,
+//     onCancel: onCancel,
+//   });
+
+//   selectedChainId.value = chainId.value;
+//   providerActivated = provider;
+//   signerActivated = signer;
+
+//   // Check for balance of BFF
+//   await displayBalanceOfBFF();
+
+//   loader.hide();
+// });
+
+// onDisconnect(() => {
+//   // reset status
+//   marketplaceConfig.value = { status: null, balance: 0 };
+
+//   console.log("disconnect");
+// });
+// onDeactivated(() => {
+//   // reset status
+//   marketplaceConfig.value = { status: null, balance: 0 };
+
+//   console.log("disconnect");
+// });
+
+// onAccountsChanged(async () => {
+//   console.log("onAccountsChanged");
+
+//   // Display Loading bar
+//   let loader = $loading.show({
+//     container: fullPage ? null : this.$refs.formContainer,
+//     canCancel: true,
+//     onCancel: onCancel,
+//   });
+
+//   // reset status
+//   marketplaceConfig.value = { status: null, balance: 0 };
+
+//   // Check for balance of BFF
+//   await displayBalanceOfBFF();
+
+//   loader.hide();
+// });
+// onChainChanged(async (chainId) => {
+//   console.log("onChainChanged");
+
+//   // Display Loading bar
+//   let loader = $loading.show({
+//     container: fullPage ? null : this.$refs.formContainer,
+//     canCancel: true,
+//     onCancel: onCancel,
+//   });
+
+//   selectedChainId.value = chainId;
+//   isChainChanged.value = true;
+
+//   // reset status
+//   marketplaceConfig.value = { status: null, balance: 0 };
+
+//   // Check for money bag qualification
+//   if (isActivated.value) {
+//     await displayBalanceOfBFF();
+//   }
+
+//   loader.hide();
+// });
+// onChanged(async ({ provider, signer }) => {
+//   console.log("onChanged");
+//   // Display Loading bar
+//   let loader = $loading.show({
+//     container: fullPage ? null : this.$refs.formContainer,
+//     canCancel: true,
+//     onCancel: onCancel,
+//   });
+
+//   selectedChainId.value = chainId.value;
+//   isChainChanged.value = true;
+//   providerActivated = provider;
+//   signerActivated = signer;
+
+//   // reset status
+//   marketplaceConfig.value = { status: null, balance: 0 };
+
+//   // Check for money bag qualification
+//   if (isActivated.value) {
+//     await displayBalanceOfBFF();
+//   }
+
+//   loader.hide();
+// });
+
+// Notify when purchase butoon is diable
+async function notifyToCheckWallet(item) {
+  let error_msg = "";
+  if (wallet.status != "connected") {
+    error_msg = "Please Connect Wallet before making purchase.";
+  } else if (!marketplaceConfig.value.status) {
+    error_msg =
+      "Please approve $BFF by clicking 'Approve' on the top right corner";
+  } else {
+    error_msg = "you have insufficient $BFF for making purchase";
+  }
+  notify({
+    group: "dapp",
+    type: "error",
+    text: error_msg,
+  });
+}
+
+// Send Transction Functions
+// tx handle functions
+async function handleTransaction(transaction) {
+  let tx;
+
+  const awaitTransaction = async (trans) => {
+    let tx;
+    try {
+      tx = await trans.wait(1);
+    } catch (error) {
+      const e = error;
+      // @see https://docs.ethers.io/v5/api/providers/types/#providers-TransactionResponse
+      if ((e.reason == "replaced" || e.reason == "repriced") && e.replacement) {
+        tx = await awaitTransaction(e.replacement);
+      } else if (e.reason == "cancelled") {
+        throw new Error("Transaction cancelled");
+      } else {
+        throw new Error(e.reason || e?.toString());
+      }
+    }
+    return tx;
+  };
+
+  tx = await awaitTransaction(transaction);
+
+  return tx;
+}
+
+// purchase item with marketplace contract
+async function clickPurchase(item) {
+  console.log(
+    "purchase token:",
+    item.item_token_id,
+    "with price:",
+    item.item_price
+  );
+
+  // Display Loading bar
+  let loader = $loading.show({
+    container: fullPage ? null : this.$refs.formContainer,
+    canCancel: true,
+    onCancel: onCancel,
+  });
+
+  // Init Contract
+  const MarketplaceContract = new ethers.Contract(
+    marketplaceAddress,
+    BFFMarketplaceAbi.abi,
+    signerActivated.value
+  );
+
+  // Check whether enough balance for minting
+  if (marketplaceConfig.value["balance"] < item.item_price) {
+    loader.hide();
+    notify({
+      group: "dapp",
+      type: "error",
+      text: t("marketplace.BFFNotEnough"),
+    });
+    return;
+  }
+
+  // Send Mint TX
+  console.log(ethers.utils.parseEther(item.item_price.toString(), "wei"));
+  let mintTx;
+  try {
+    mintTx = await MarketplaceContract.mintItem(
+      item.item_token_id,
+      1,
+      ethers.utils.parseEther(item.item_price.toString(), "wei")
+    );
+  } catch (e) {
+    loader.hide();
+    if (e.code == "ACTION_REJECTED") {
+      // User refused transaction.
+      console.error(e);
+      notify({
+        group: "dapp",
+        type: "error",
+        text: t("dapp.userDeclineTransaction"),
+      });
+      return;
+    } else if (e.code == "UNPREDICTABLE_GAS_LIMIT") {
+      console.error(e);
+      notify({
+        group: "dapp",
+        type: "error",
+        text: t("marketplace.revertByContract"),
+      });
+      return;
+    } else {
+      console.error(e);
+      return;
+    }
+  }
+
+  // Show up waiting for tx completed notice
+  notify({
+    group: "moneyBag",
+    type: "info",
+    title: t("marketplace.waitingForTXResult"),
+    duration: 7000,
+  });
+
+  // Handle TX Response
+  let receipt;
+  try {
+    receipt = await handleTransaction(mintTx);
+    console.log(`mintTx:${receipt.transactionHash}`, receipt);
+
+    // update balance
+    marketplaceConfig.value["balance"] -= item.item_price;
+
+    // update item detail
+    marketplaceConfig.value["tokenID"] = item.item_token_id;
+
+    // show notification about suucess in case of devices not getting any messages
+    notify({
+      group: "moneyBag",
+      type: "success",
+      title: item.item_name + " Minted!",
+      text:
+        "You have minted " +
+        item.item_name +
+        "(token ID:" +
+        item.item_token_id +
+        ") with price:" +
+        item.item_price +
+        " B",
+      duration: 10000,
+    });
+
+    // display modal about minted NFT
+    showPop.value = true;
+  } catch (e) {
+    console.error(e);
+    loader.hide();
+    notify({
+      group: "dapp",
+      type: "error",
+      text: t("marketplace.approveTxFailed"),
+    });
+    return;
+  }
+
+  // hide loading bar when tx finished
+  loader.hide();
+}
+
 const closePop = () => {
   showPop.value = false;
 };
 </script>
+
 <style lang="scss">
 $class-name: sec-card;
 .#{$class-name} {
@@ -244,7 +590,7 @@ $class-name: sec-card;
           }
 
           &-pur {
-            color: grey;
+            color: white;
             font-weight: 500;
             display: flex;
             align-items: center;
@@ -261,6 +607,9 @@ $class-name: sec-card;
   }
 }
 
+.notConnected {
+  color: grey !important;
+}
 /* --------@popup-------- */
 .esNotification {
   position: fixed;

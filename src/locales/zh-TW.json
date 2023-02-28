@@ -1,45 +1,94 @@
 {
-    "hero": {
-        "description": "Rug Pull Frens, 快來領取通往 RAIbbit Hole 夢境世界的入場券吧！",
+  "hero": {
+    "description": "Rug Pull Frens, 快來領取通往 RAIbbit Hole 夢境世界的入場券吧！"
+  },
+  "dapp": {
+    "connectWallet": "Connect",
+    "disconnectWallet": "Disconnect",
+    "walletConnecting": "Connecting...",
+    "walletLoading": "Loading...",
+    "burnDescription": "RPF TokenId to Burn : ",
+    "noRPFDescription": "No Rug Pull Frens Found in Wallet!",
+    "userDeclineTransaction": "User declined Tx",
+    "approveRPFForBurnButton": "Approve",
+    "mintTicketButton": "Mint Ticket",
+    "RPFHasBeenApproved": "RPF has been approved. You can mint the Ticket now!",
+    "RPFNotYetApproved": "Need approval for burnning RPF, please press 'Approve' button below",
+    "RPFApprovalTXFailed": "Approval Failed!",
+    "RPFApprovalTXSuccess": "Approved Successfully!",
+    "ticketNotActiveMessages": "Ticket mint is not available now",
+    "ticketMintTXFailed": "Ticket Mint Failed!",
+    "ticketMintedTitle": "RAIbbit Hole Tickets Minted Successfully!",
+    "ticketMintedMessages": "You have minted 1 Ticket!",
+    "viewTicketOnOpensea": "VIEW ON OPENSEA",
+    "ticketMintedAlreadyTx": "Transaction Failed. You have already minted the ticket.",
+    "ticketMintedAlreadyConnectWallet": " You have already minted the ticket.",
+    "mintAmount": "Mint Amount",
+    "rpfHolderMintDescription": "Current Stage: RPF Holders Mint",
+    "galaxyMintButton": "Mint Galaxy Frens",
+    "galaxtMintTXFailed": "Mint failed! Please try again later or contact admin for support",
+    "rpfHolderValidationFailed": "You are not eligible for the this Mint.",
+    "frensMintedTitle": "Galaxy Frens Mint Success!",
+    "whitelistMintDescription": "Current Stage: Allowlist Mint",
+    "publicMintDescription": "Current Stage: Public Mint",
+    "delayOnOpenseaNotice": "It might take 1~2 mins for your Galaxy Frens to display on Opensea.",
+    "mintQuantityExceedsOnRPFHolderMint": "All the RPF holders-reserved Galaxy Frens have been minted.",
+    "mintQuantityExceedsOnWhitelistMint": "All the Allow List Galaxy Frens have been minted.",
+    "mintQuantityExceedsOnPublicMint": "All the public-reserved Galaxy Frens have been minted."
+  },
+  "marketplace": {
+    "revertByContract": "Transaction failed! Please contact the admins for support",
+    "waitingForTXResult": "Processing...",
+    "approvedTitle": "Marketplace Contract Approved!",
+    "approvedContext": "You are now open to purchase item on marketplace!",
+    "approveTxFailed": "Failed! Please try again later or reach out to the admins for support",
+    "BFFNotEnough": "BFF Coin insufficient"
+  },
+  "about": {
+    "description": "RAIbbit Hole 是一個漂浮於藝術家 Raimochi 淺層夢境中的國度，國度內有已經高度發展的 Rug Pull Frens，有最近剛被發現，埋藏於森林之下、兔子洞中的兔子洞 —— Galaxy Frens，還有其他尚未被開發與探索的區域。\n\nRAIbbit Hole 是現實與夢境的傳送口，也是 web2 與 web3 世界的連接點。當你感到疲憊、絕望、迷茫時，會有隻神秘的小兔子出現在你的夢境中，偷偷告訴你進入 RAIbbit Hole 的方式，帶你進入一個找到屬於自己的身份，暫時遠離現實的舒適圈。 \n\n「嘿！歡迎你踏進 RAIbbit Hole 兔子洞」"
+  },
+  "vision": {
+    "description": "創作、出圈、社群、知識是這個世界的核心。我們希望透過 Raimochi 的作品，與 RAIbbit Hole 的角色 IP，將溫暖傳到各個角落。我們希望能持續與不同的創作者、品牌合作，推出創新的數位創作和 NFT 的落地應用，讓更多人能體會 web3 兔子洞的迷人之處！",
+    "sub": "・具體 Roadmap 會視最終銷售與市場狀況制定"
+  },
+  "galaxy": {
+    "description": "Galaxy Frens 是一個埋藏在地底下的城鎮。地上表面是一整片森林，終年被厚厚的雪覆蓋。在森林深處有個不顯眼的小洞，據說找到這個小洞要靠緣份，或是當你在RPF世界感到絕望時，到一間神秘的酒吧可能可以找到傳送口。"
+  },
+  "rug": {
+    "description": "在這個平行時空的區塊鍊世界中，為保持匿名性與去中心化，我們擁有一個動物玩偶頭套，戴上去後我們都是 Frens，我們只代表這個 Frens。\n\n我們看上去很可愛，但千萬別掉以輕心，我們是什麼都搶的「好朋友」，錢、NFT、音樂、影像、你的愛、你的眼淚、你的失落⋯⋯我們什麼都搶！我們會把這些東西偷偷從這個口袋移到那個錢袋，如果能讓你或自己更開心一些，這一點點壞壞的事也是可以被原諒的吧？\n\n我們是一群可愛的搶匪，一群努力活著的搶匪，為了心愛的人不懈的奮鬥著，只為了換得一些笑容、一些美好體驗、一些報酬、一些⋯⋯不讓自己感到白費的東西，一點點也好，希望能獲得更多安慰與鼓勵，我所做的事是為了更好的未來——誰不是呢？"
+  },
+  "faq": [
+    {
+      "question": "Can you tell me the mint info?",
+      "anser": "Mint price and mint date will be announced in our Discord server when the timing is right."
     },
-    "about": {
-        "description": "RAIbbit Hole 是一個漂浮於藝術家 Raimochi 淺層夢境中的國度，國度內有已經高度發展的 Rug Pull Frens，有最近剛被發現，埋藏於森林之下、兔子洞中的兔子洞 —— Galaxy Frens，還有其他尚未被開發與探索的區域。\n\nRAIbbit Hole 是現實與夢境的傳送口，也是 web2 與 web3 世界的連接點。當你感到疲憊、絕望、迷茫時，會有隻神秘的小兔子出現在你的夢境中，偷偷告訴你進入 RAIbbit Hole 的方式，帶你進入一個找到屬於自己的身份，暫時遠離現實的舒適圈。 \n\n「嘿！歡迎你踏進 RAIbbit Hole 兔子洞」"
+    {
+      "question": "If I own Rug Pull Frens, will I get a special perk for the mint?",
+      "anser": "We have prepared a special perk for the Rug Pull Frens holders to get their Galaxy Frens! More information will be released in our Discord server."
     },
-    "vision": {
-        "description": "創作、出圈、社群、知識是這個世界的核心。我們希望透過 Raimochi 的作品，與 RAIbbit Hole 的角色 IP，將溫暖傳到各個角落。我們希望能持續與不同的創作者、品牌合作，推出創新的數位創作和 NFT 的落地應用，讓更多人能體會 web3 兔子洞的迷人之處！",
-        "sub": "・具體 Roadmap 會視最終銷售與市場狀況制定"
+    {
+      "question": "What's the max mint at a time?",
+      "anser": "Max mint per txn will be announced along with the mint info in our Discord server."
     },
-    "galaxy": {
-        "description": "Galaxy Frens 是一個埋藏在地底下的城鎮。地上表面是一整片森林，終年被厚厚的雪覆蓋。在森林深處有個不顯眼的小洞，據說找到這個小洞要靠緣份，或是當你在RPF世界感到絕望時，到一間神秘的酒吧可能可以找到傳送口。"
+    {
+      "question": "How do I get on the whitelist?",
+      "anser": "Whitelist spots will be given away through raffles, collab giveaways, and community events! Check out our Discord server for more information!"
     },
-    "rug": {
-        "description": "在這個平行時空的區塊鍊世界中，為保持匿名性與去中心化，我們擁有一個動物玩偶頭套，戴上去後我們都是 Frens，我們只代表這個 Frens。\n\n我們看上去很可愛，但千萬別掉以輕心，我們是什麼都搶的「好朋友」，錢、NFT、音樂、影像、你的愛、你的眼淚、你的失落⋯⋯我們什麼都搶！我們會把這些東西偷偷從這個口袋移到那個錢袋，如果能讓你或自己更開心一些，這一點點壞壞的事也是可以被原諒的吧？\n\n我們是一群可愛的搶匪，一群努力活著的搶匪，為了心愛的人不懈的奮鬥著，只為了換得一些笑容、一些美好體驗、一些報酬、一些⋯⋯不讓自己感到白費的東西，一點點也好，希望能獲得更多安慰與鼓勵，我所做的事是為了更好的未來——誰不是呢？"
+    {
+      "question": "If I own both Rug Pull Frens and Galaxy Frens, will I recieve any special benefits?",
+      "anser": "Yes, holding both Rug Pull Frens and Galaxy Frens allows you to participate in both storylines and grants you some special benefits!"
     },
-    "faq": [
-        {
-            "question": "Can you tell me the mint info?",
-            "anser": "Mint price and mint date will be announced in our Discord server when the timing is right."
-        },{
-            "question": "If I own Rug Pull Frens, will I get a special perk for the mint?",
-            "anser": "We have prepared a special perk for the Rug Pull Frens holders to get their Galaxy Frens! More information will be released in our Discord server."
-        },{
-            "question": "What's the max mint at a time?",
-            "anser": "Max mint per txn will be announced along with the mint info in our Discord server."
-        },{
-            "question": "How do I get on the whitelist?",
-            "anser": "Whitelist spots will be given away through raffles, collab giveaways, and community events! Check out our Discord server for more information!"
-        },{
-            "question": "If I own both Rug Pull Frens and Galaxy Frens, will I recieve any special benefits?",
-            "anser": "Yes, holding both Rug Pull Frens and Galaxy Frens allows you to participate in both storylines and grants you some special benefits!"
-        },{
-            "question": "How will the Galaxy Frens be distributed?",
-            "anser": "The distribution plan will be announced once the total supply is set."
-        },{
-            "question": "What are the royalty fees and how will they be used?",
-            "anser": "The percentage of royalty fees collected in secondary sales will also be announced when the mint info is released. A portion of these fees will be used on fulfilling our roadmap and giving back to the community!"
-        },{
-            "question": "Awesome! How can I get involved?",
-            "anser": "Jump ahead to our discord community! You can find out more about the RAIbbit Hole, participating in various events, and get to know other frens!"
-        }
-    ]
+    {
+      "question": "How will the Galaxy Frens be distributed?",
+      "anser": "The distribution plan will be announced once the total supply is set."
+    },
+    {
+      "question": "What are the royalty fees and how will they be used?",
+      "anser": "The percentage of royalty fees collected in secondary sales will also be announced when the mint info is released. A portion of these fees will be used on fulfilling our roadmap and giving back to the community!"
+    },
+    {
+      "question": "Awesome! How can I get involved?",
+      "anser": "Jump ahead to our discord community! You can find out more about the RAIbbit Hole, participating in various events, and get to know other frens!"
+    }
+  ]
 }

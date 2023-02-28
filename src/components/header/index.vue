@@ -10,20 +10,70 @@
       <p>RAIbbit Hole</p>
       <div class="header__nav">
         <a href="https://raibbithole.xyz/" class="header__nav-btn"> Home </a>
-        <a href="" class="header__nav-btn yellow" @click.prevent="disableBtn">
+        <!-- <a href="" class="header__nav-btn yellow" @click.prevent="disableBtn">
           Connect Wallet
-        </a>
-        <a href="" class="header__nav-btn yellow" @click.prevent="disableBtn">
-          Store (Coming Soon)
+        </a> -->
+        <button
+          @click="isActivated ? disconnect() : open()"
+          class="btn"
+          :disabled="wallet.status === 'connecting'"
+        >
+          {{
+            wallet.status === "connected"
+              ? "Disconnect"
+              : wallet.status === "connecting"
+              ? "Connecting..."
+              : wallet.status === "loading"
+              ? "Loading..."
+              : "Connect Wallet"
+          }}
+        </button>
+        <vd-board
+          :connectors="connectors"
+          :connectErrorHandler="connectErrorHandler"
+          dark
+        >
+        </vd-board>
+        <div v-if="wallet.status === 'connected'" class="header__nav">
+          $ {{ marketplaceConfig.balance }}
+        </div>
+        <a
+          v-if="
+            (wallet.status === 'connected') & (marketplaceConfig.status != true)
+          "
+          href="#card"
+          class="header__nav-btn yellow"
+          @click="approveBFFForMarketPlace()"
+        >
+          Approve
         </a>
       </div>
     </div>
   </header>
 </template>
 <script setup>
+import { watch, inject } from "@vue/runtime-core";
 import { useI18n } from "vue-i18n";
 import { i18n } from "@/main.js";
 import { nextTick, onMounted, ref } from "@vue/runtime-core";
+import {
+  useMulticall,
+  useBoard,
+  useEthers,
+  useWallet,
+  displayChainName,
+  displayEther,
+  shortenAddress,
+  useEthersHooks,
+  MetaMaskConnector,
+  WalletConnectConnector,
+  CoinbaseWalletConnector,
+  VueDapp,
+} from "vue-dapp";
+import { ethers } from "ethers";
+import BFFAbi from "/src/abi/BFF.json";
+import { useLoading } from "vue-loading-overlay";
+import { notify } from "@kyvg/vue3-notification";
 
 const { locale, t } = useI18n({
   inheritLocale: true,
@@ -64,6 +114,352 @@ onMounted(() => {
     // })
   });
 });
+
+// Init Loader
+const $loading = useLoading();
+const fullPage = ref(true);
+const onCancel = () => console.log("User cancelled the loader.");
+
+// ------------- Dapp Setting ----------------
+// 1. Dapp/Blockchain network Config
+const { open } = useBoard();
+const { wallet, disconnect, onDisconnect, onAccountsChanged, onChainChanged } =
+  useWallet();
+const { address, balance, chainId, isActivated } = useEthers();
+const { onActivated, onChanged, onDeactivated } = useEthersHooks();
+const { availableNetworks } = useEthers();
+const supportedChainId = Object.keys(availableNetworks.value).map((key) =>
+  Number(key)
+);
+console.log(supportedChainId);
+
+// Blockchain Services
+const infuraId = "27a789b5b3154631a5dc5c3a61c789bb";
+const openseaAPIKey = "b443520a48ed4704bd46ead51059a05a";
+
+// contract addr : mainnet
+// const chainIdToUse = 137;
+// const BFFAddress = "0x0cCDe8834f16035bb116cDC17aF024df508E5A6D";
+// const marketplaceAddress = "";
+
+// contract addr : testnet
+const chainIdToUse = 80001;
+const BFFAddress = "0xB80ae96b55379A82Fa9AABee850C6683D6157533";
+const marketplaceAddress = "0xd0b62655d7095AF74868E2bAe7679Ab9a4e819d9";
+
+let providerActivated = inject("providerActivated");
+let signerActivated = inject("signerActivated");
+
+const connectors = [
+  new MetaMaskConnector({
+    appUrl: "http://localhost:3000",
+  }),
+  new WalletConnectConnector({
+    qrcode: true,
+    rpc: {
+      1: `https://mainnet.infura.io/v3/${infuraId}`,
+      5: `https://goerli.infura.io/v3/${infuraId}`,
+      137: `https://polygon-mainnet.infura.io/v3/${infuraId}`,
+      80001: `https://mumbai.infura.io/v3/${infuraId}`,
+    },
+  }),
+];
+
+// ------ dapp Function Implementation --------
+const marketplaceConfig = inject("marketplaceConfig");
+const selectedChainId = inject("selectedChainId");
+const isChainChanged = inject("isChainChanged");
+const switchError = inject("switchError");
+
+// Event hooks
+onActivated(async ({ provider, address, signer }) => {
+  console.log("onActivated: ", provider, address, signer);
+
+  // Display Loading bar
+  let loader = $loading.show({
+    container: fullPage ? null : this.$refs.formContainer,
+    canCancel: true,
+    onCancel: onCancel,
+  });
+
+  selectedChainId.value = chainId.value;
+  providerActivated.value = provider;
+  signerActivated.value = signer;
+
+  // Check for balance of BFF
+  if (chainIdToUse === selectedChainId.value) {
+    await displayBalanceOfBFF();
+  }
+
+  loader.hide();
+});
+
+onDisconnect(() => {
+  // reset status
+  marketplaceConfig.value = { status: null, balance: 0 };
+
+  console.log("disconnect");
+});
+onDeactivated(() => {
+  // reset status
+  marketplaceConfig.value = { status: null, balance: 0 };
+
+  console.log("disconnect");
+});
+
+onAccountsChanged(async () => {
+  console.log("onAccountsChanged");
+
+  // Display Loading bar
+  let loader = $loading.show({
+    container: fullPage ? null : this.$refs.formContainer,
+    canCancel: true,
+    onCancel: onCancel,
+  });
+
+  // reset status
+  marketplaceConfig.value = { status: null, balance: 0 };
+
+  // Check for balance of BFF
+  await displayBalanceOfBFF();
+
+  loader.hide();
+});
+onChainChanged(async (chainId) => {
+  console.log("onChainChanged");
+
+  // Display Loading bar
+  let loader = $loading.show({
+    container: fullPage ? null : this.$refs.formContainer,
+    canCancel: true,
+    onCancel: onCancel,
+  });
+
+  selectedChainId.value = chainId;
+  isChainChanged.value = true;
+
+  // reset status
+  marketplaceConfig.value = { status: null, balance: 0 };
+
+  // Check for money bag qualification
+  if (isActivated.value) {
+    await displayBalanceOfBFF();
+  }
+
+  loader.hide();
+});
+onChanged(async ({ provider, signer }) => {
+  console.log("onChanged");
+  // Display Loading bar
+  let loader = $loading.show({
+    container: fullPage ? null : this.$refs.formContainer,
+    canCancel: true,
+    onCancel: onCancel,
+  });
+
+  selectedChainId.value = chainId.value;
+  isChainChanged.value = true;
+  providerActivated.value = provider;
+  signerActivated.value = signer;
+
+  // reset status
+  marketplaceConfig.value = { status: null, balance: 0 };
+
+  // Check for money bag qualification
+  if (isActivated.value) {
+    await displayBalanceOfBFF();
+  }
+
+  loader.hide();
+});
+
+// For switching back to previous chainId without calling switchChain() again
+watch(selectedChainId, async (val, oldVal) => {
+  console.log(`from ${oldVal} to ${val}`);
+
+  // Display Loading bar
+  let loader = $loading.show({
+    container: fullPage ? null : this.$refs.formContainer,
+    canCancel: true,
+    onCancel: onCancel,
+  });
+
+  // Check: bypass the correct chainId
+  if (selectedChainId.value === chainIdToUse) {
+    loader.hide();
+    return;
+  }
+
+  // Show up switch network notice
+  notify({
+    group: "dapp",
+    type: "warn",
+    title: t("moneyBag.switchNetwork"),
+    duration: 6000,
+  });
+
+  // Switch network
+  try {
+    if (wallet.connector) {
+      await wallet.connector.switchChain(chainIdToUse);
+    }
+  } catch (e) {
+    switchError.value = true;
+    selectedChainId.value = oldVal;
+    console.error(e);
+  }
+
+  loader.hide();
+});
+
+// ----- Reading Functions ------
+// get balance from contract
+async function displayBalanceOfBFF() {
+  // Init Contract
+  const BFFContract = new ethers.Contract(
+    BFFAddress,
+    BFFAbi.abi,
+    providerActivated.value
+  );
+
+  // get Balance
+  let balance_wei;
+  balance_wei = await BFFContract.balanceOf(address.value);
+  marketplaceConfig.value["balance"] = parseInt(
+    ethers.utils.formatEther(balance_wei)
+  );
+
+  // get approved status
+  let approved_amount;
+  approved_amount = await BFFContract.allowance(
+    address.value,
+    marketplaceAddress
+  );
+  if (
+    ethers.utils.formatUnits(ethers.constants.MaxUint256, "wei") ===
+    ethers.utils.formatUnits(approved_amount, "wei")
+  ) {
+    marketplaceConfig.value["status"] = true;
+  }
+
+  console.log("balance : ", marketplaceConfig.value["balance"]);
+  console.log("approved status : ", marketplaceConfig.value["status"]);
+}
+
+// ----- TX Functions -----
+// tx handle functions
+async function handleTransaction(transaction) {
+  let tx;
+
+  const awaitTransaction = async (trans) => {
+    let tx;
+    try {
+      tx = await trans.wait(1);
+    } catch (error) {
+      const e = error;
+      // @see https://docs.ethers.io/v5/api/providers/types/#providers-TransactionResponse
+      if ((e.reason == "replaced" || e.reason == "repriced") && e.replacement) {
+        tx = await awaitTransaction(e.replacement);
+      } else if (e.reason == "cancelled") {
+        throw new Error("Transaction cancelled");
+      } else {
+        throw new Error(e.reason || e?.toString());
+      }
+    }
+    return tx;
+  };
+
+  tx = await awaitTransaction(transaction);
+
+  return tx;
+}
+// approve BFF token to be used on Marketplace contract
+async function approveBFFForMarketPlace() {
+  // Display Loading bar
+  let loader = $loading.show({
+    container: fullPage ? null : this.$refs.formContainer,
+    canCancel: true,
+    onCancel: onCancel,
+  });
+
+  // Init Contract
+  const BFFContract = new ethers.Contract(
+    BFFAddress,
+    BFFAbi.abi,
+    signerActivated.value
+  );
+
+  // Send Mint TX
+  let approveTx;
+  try {
+    approveTx = await BFFContract.approve(
+      marketplaceAddress,
+      ethers.utils.formatUnits(ethers.constants.MaxUint256, "wei")
+    );
+  } catch (e) {
+    loader.hide();
+    if (e.code == "ACTION_REJECTED") {
+      // User refused transaction.
+      console.error(e);
+      notify({
+        group: "dapp",
+        type: "error",
+        text: t("dapp.userDeclineTransaction"),
+      });
+      return;
+    } else if (e.code == "UNPREDICTABLE_GAS_LIMIT") {
+      console.error(e);
+      notify({
+        group: "dapp",
+        type: "error",
+        text: t("marketplace.revertByContract"),
+      });
+      return;
+    } else {
+      console.error(e);
+      return;
+    }
+  }
+
+  // Show up waiting for tx completed notice
+  notify({
+    group: "moneyBag",
+    type: "info",
+    title: t("marketplace.waitingForTXResult"),
+    duration: 7000,
+  });
+
+  // Handle TX Response
+  let receipt;
+  try {
+    receipt = await handleTransaction(approveTx);
+    console.log(`approveTx:${receipt.transactionHash}`, receipt);
+
+    // update approved status
+    marketplaceConfig.value["status"] = true;
+
+    // show notification about suucess in case of devices not getting any messages
+    notify({
+      group: "moneyBag",
+      type: "success",
+      title: t("marketplace.approvedTitle"),
+      text: t("marketplace.approvedContext"),
+      duration: 10000,
+    });
+  } catch (e) {
+    console.error(e);
+    loader.hide();
+    notify({
+      group: "dapp",
+      type: "error",
+      text: t("marketplace.approveTxFailed"),
+    });
+    return;
+  }
+
+  // hide loading bar when tx finished
+  loader.hide();
+}
 </script>
 <style lang="scss">
 $class-name: header;

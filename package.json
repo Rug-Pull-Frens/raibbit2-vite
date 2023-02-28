@@ -8,17 +8,27 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@coinbase/wallet-sdk": "^3.6.4",
+    "@gnosis.pm/safe-apps-provider": "^0.15.1",
+    "@gnosis.pm/safe-apps-sdk": "^7.8.0",
     "@intlify/vite-plugin-vue-i18n": "^5.0.1",
+    "@kyvg/vue3-notification": "^2.9.0",
+    "@rollup/plugin-inject": "^5.0.3",
+    "@walletconnect/web3-provider": "^1.8.0",
     "aos": "^2.3.4",
     "axios": "^0.27.2",
     "detect-browser": "^5.3.0",
+    "ethers": "5.7.2",
     "gsap": "^3.10.4",
     "imagesloaded": "^5.0.0",
     "locomotive-scroll": "^4.1.4",
     "lodash-es": "^4.17.21",
     "sass": "^1.54.0",
     "vue": "^3.2.25",
-    "vue-i18n": "^9.1.10"
+    "vue-dapp": "^0.7.2",
+    "vue-final-modal": "^4.0.4",
+    "vue-i18n": "^9.1.10",
+    "vue-loading-overlay": "^6.0"
   },
   "devDependencies": {
     "@types/three": "^0.141.0",
