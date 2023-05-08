@@ -7,10 +7,22 @@
           v-for="(item, key) in card.items"
           :key="key"
         >
-          <figure class="sec-card__artist-item-img">
+          <figure v-if="!item.item_html" class="sec-card__artist-item-img">
             <a :href="item.item_url" target="_blank">
               <img :src="item.item_image" />
             </a>
+          </figure>
+          <figure v-if="item.item_html" class="sec-card__artist-item-img">
+            <img
+              src="https://raibbithole.s3.ap-northeast-1.amazonaws.com/NEEDS_food_DAY.png"
+              @click="toggleImages"
+              :class="{ hide: isImage2Shown }"
+            />
+            <img
+              src="https://raibbithole.s3.ap-northeast-1.amazonaws.com/NEEDS_food_NIGHT.png"
+              @click="toggleImages"
+              :class="{ hide: isImage1Shown }"
+            />
           </figure>
           <div class="sec-card__artist-item-content">
             <h4 class="sec-card__artist-item-content-name">
@@ -155,6 +167,14 @@ axios
   });
 
 console.log("card", card);
+
+// html modification
+const isImage1Shown = ref(true);
+const isImage2Shown = ref(false);
+const toggleImages = () => {
+  isImage1Shown.value = !isImage1Shown.value;
+  isImage2Shown.value = !isImage2Shown.value;
+};
 
 // ------ dapp Function Implementation --------
 // Event hooks
@@ -674,5 +694,9 @@ $class-name: sec-card;
       text-align: center;
     }
   }
+}
+
+.hide {
+  display: none;
 }
 </style>
