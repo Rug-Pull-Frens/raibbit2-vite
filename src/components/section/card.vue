@@ -27,13 +27,13 @@
           <figure v-if="item.item_html2" class="sec-card__artist-item-img">
             <img
               src="https://raibbithole.s3.ap-northeast-1.amazonaws.com/NEEDS_room-DAY.png"
-              @click="toggleImages"
-              :class="{ hide: isImage2Shown }"
+              @click="toggleImages2"
+              :class="{ hide: isImage4Shown }"
             />
             <img
               src="https://raibbithole.s3.ap-northeast-1.amazonaws.com/NEEDS_room-NIGHT.png"
-              @click="toggleImages"
-              :class="{ hide: isImage1Shown }"
+              @click="toggleImages2"
+              :class="{ hide: isImage3Shown }"
             />
           </figure>
           <div class="sec-card__artist-item-content">
@@ -186,6 +186,13 @@ const isImage2Shown = ref(false);
 const toggleImages = () => {
   isImage1Shown.value = !isImage1Shown.value;
   isImage2Shown.value = !isImage2Shown.value;
+};
+
+const isImage3Shown = ref(true);
+const isImage4Shown = ref(false);
+const toggleImages2 = () => {
+  isImage3Shown.value = !isImage3Shown.value;
+  isImage4Shown.value = !isImage4Shown.value;
 };
 
 // ------ dapp Function Implementation --------
