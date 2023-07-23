@@ -24,6 +24,18 @@
               :class="{ hide: isImage1Shown }"
             />
           </figure>
+          <figure v-if="item.item_html2" class="sec-card__artist-item-img">
+            <img
+              src="https://raibbithole.s3.ap-northeast-1.amazonaws.com/NEEDS_room-DAY.png"
+              @click="toggleImages"
+              :class="{ hide: isImage2Shown }"
+            />
+            <img
+              src="https://raibbithole.s3.ap-northeast-1.amazonaws.com/NEEDS_room-NIGHT.png"
+              @click="toggleImages"
+              :class="{ hide: isImage1Shown }"
+            />
+          </figure>
           <div class="sec-card__artist-item-content">
             <h4 class="sec-card__artist-item-content-name">
               {{ item.item_name }}
