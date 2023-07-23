@@ -7,7 +7,10 @@
           v-for="(item, key) in card.items"
           :key="key"
         >
-          <figure v-if="!item.item_html" class="sec-card__artist-item-img">
+          <figure
+            v-if="!item.item_html & !item.item_html2"
+            class="sec-card__artist-item-img"
+          >
             <a :href="item.item_url" target="_blank">
               <img :src="item.item_image" />
             </a>
