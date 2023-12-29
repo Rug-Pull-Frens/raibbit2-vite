@@ -200,7 +200,7 @@ axios
     card.value = res.data;
     setTimeout(() => {
       window.$scroll.update();
-    }, 1000);
+    }, 2000);
 
     // return {
     //     card
