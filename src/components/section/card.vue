@@ -39,6 +39,30 @@
               :class="{ hide: isImage3Shown }"
             />
           </figure>
+          <figure v-if="item.item_html3" class="sec-card__artist-item-img">
+            <img
+              src="https://raibbithole.s3.ap-northeast-1.amazonaws.com/NEEDS_Inner_The_world_in_your_head_1.png"
+              @click="toggleImages3"
+              :class="{ hide: isImage6Shown }"
+            />
+            <img
+              src="https://raibbithole.s3.ap-northeast-1.amazonaws.com/NEEDS_Inner_The_world_in_your_head_2.png"
+              @click="toggleImages3"
+              :class="{ hide: isImage5Shown }"
+            />
+          </figure>
+          <figure v-if="item.item_html4" class="sec-card__artist-item-img">
+            <img
+              src="https://raibbithole.s3.ap-northeast-1.amazonaws.com/NEEDS_connect_cute.png"
+              @click="toggleImages4"
+              :class="{ hide: isImage8Shown }"
+            />
+            <img
+              src="https://raibbithole.s3.ap-northeast-1.amazonaws.com/NEEDS_connect.png"
+              @click="toggleImages4"
+              :class="{ hide: isImage7Shown }"
+            />
+          </figure>
           <div class="sec-card__artist-item-content">
             <h4 class="sec-card__artist-item-content-name">
               {{ item.item_name }}
@@ -196,6 +220,20 @@ const isImage4Shown = ref(false);
 const toggleImages2 = () => {
   isImage3Shown.value = !isImage3Shown.value;
   isImage4Shown.value = !isImage4Shown.value;
+};
+
+const isImage5Shown = ref(true);
+const isImage6Shown = ref(false);
+const toggleImages3 = () => {
+  isImage5Shown.value = !isImage5Shown.value;
+  isImage6Shown.value = !isImage6Shown.value;
+};
+
+const isImage7Shown = ref(true);
+const isImage8Shown = ref(false);
+const toggleImages4 = () => {
+  isImage7Shown.value = !isImage7Shown.value;
+  isImage8Shown.value = !isImage8Shown.value;
 };
 
 // ------ dapp Function Implementation --------
