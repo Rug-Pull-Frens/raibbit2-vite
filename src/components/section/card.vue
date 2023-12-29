@@ -8,7 +8,12 @@
           :key="key"
         >
           <figure
-            v-if="!item.item_html & !item.item_html2"
+            v-if="
+              !item.item_html &
+              !item.item_html2 &
+              !item.item_html3 &
+              !item.item_html4
+            "
             class="sec-card__artist-item-img"
           >
             <a :href="item.item_url" target="_blank">
